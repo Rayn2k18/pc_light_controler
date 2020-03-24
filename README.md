@@ -26,7 +26,9 @@ Needed librairies :
 
 TODO : 
 - edit the 2 lines (50 + 51) with your values :
+
 #define WIFI_SSID "YOUR SSID"     // WiFi network
+
 #define WIFI_PASSWORD "YOUR WIFI PASSWORD" // WiFi network password
 
-- print your case (to avoid electrical shorts ^^), 1 available here : 
+- print your case (to avoid electrical shorts ^^), 1 available here : https://www.thingiverse.com/thing:4238962
