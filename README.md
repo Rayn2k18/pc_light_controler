@@ -25,7 +25,7 @@ Needed librairies :
 - EEPROM
 
 Control URLs (GET) : 
-http://<IP of ESP>/set?<command1>&<command2>&<command3>...
+<b>http://<IP of ESP>/set?</b><command1><b>&</b><command2><b>&</b><command3>...
 	commands can be :
 	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)
 	- power_bton=9		: trigger power button for 32s (force power off computer)
