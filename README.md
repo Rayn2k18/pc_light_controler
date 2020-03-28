@@ -25,7 +25,7 @@ Needed librairies :
 - EEPROM
 
 Control URLs (GET) : 
-<b>http://<IP of ESP>/set?</b><command1><b>&</b><command2><b>&</b><command3>...
+<b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...
 	commands can be :
 	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)
 	- power_bton=9		: trigger power button for 32s (force power off computer)
@@ -37,10 +37,10 @@ Control URLs (GET) :
 	- trig_mode=2  		: audio level triggers animation (default)
 	- trig=1		: triggers the "random fireworks" animation
 	- trig			: triggers the current animation
-	- m=<0-56/59>		: switch to animation (see http://<IP of ESP>/ for numbers)
-	- b=<0-255>		: sets brightness
-	- s=<number>		: sets animation speed
-	- c=<000000-ffffff>	: sets color
+	- m=&#60;0-56/59&#62;		: switch to animation (see http://&#60;IP of ESP&#62;/ for numbers)
+	- b=&#60;0-255&#62;		: sets brightness
+	- s=&#60;number&#62;		: sets animation speed
+	- c=&#60;000000-ffffff&#62;	: sets color
 	- a=+			: autocycle = on
 	- a=-			: autocycle = off
 
