@@ -2,11 +2,11 @@ Aims :
 - control RGB lights from my computer case (rgb lights are basically ws2812b on 5v led strips)
 - trigger animation from hdd led activity or audio output
 - remember my settings :
-		- which animation to trigger at start, 
-		- on external trigger
-		- animation speed
-		- trigger level (for audio)
-		- brightness
+	- which animation to trigger at start, 
+	- on external trigger
+	- animation speed
+	- trigger level (for audio)
+	- brightness
 - power on / power off my PC (since wake on lan doesn't work on my MB)
 
 Needed components : 
