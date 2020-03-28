@@ -24,16 +24,6 @@ Needed librairies :
 - WS2812FX (code based on "esp8266_webinterface" example files from that library)
 - EEPROM
 
-TODO : 
-- edit the 4 lines (50+51, 70+71) with your values :
-	-#define WIFI_SSID "YOUR SSID"     // WiFi network
-	-#define WIFI_PASSWORD "YOUR WIFI PASSWORD" // WiFi network password
--
-	-#define LED_COUNT 60        // number of leds of your strip N°1
-	-#define LED_COUNT2 80		// number of leds of your strip N°2 
-
-- print your case (to avoid electrical shorts ^^), 1 available here : https://www.thingiverse.com/thing:4238962
-
 Control URLs (GET) : <br>
 <ul><b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...</ul>
 commands can be :
@@ -54,4 +44,18 @@ commands can be :
 	<li> c=&#60;000000-ffffff&#62;	: sets color</li>
 	<li> a=+			: autocycle = on</li>
 	<li> a=-			: autocycle = off</li>
+</ul>
+
+TODO : 
+<ul>
+	<li>edit the 4 lines (50+51, 70+71) with your values :</li>
+	<ul><i>
+		<li>#define WIFI_SSID "<b>YOUR SSID</b>"     // WiFi network</li>
+		<li>#define WIFI_PASSWORD "<b>YOUR WIFI PASSWORD</b>" // WiFi network password</li>
+	<br>
+		<li>#define LED_COUNT 60        // number of leds of your strip N°1</li>
+		<li>#define LED_COUNT2 80		// number of leds of your strip N°2 </li>
+	</ul>
+	<br>
+	<li>print your case (to avoid electrical shorts ^^), 1 available here : <a href="https://www.thingiverse.com/thing:4238962">https://www.thingiverse.com/thing:4238962</a></li>
 </ul>
