@@ -26,7 +26,7 @@ Needed librairies :
 
 Control URLs (GET) : <br>
 <b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...<br>
-	commands can be :<br>
+commands can be :<br>
 	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)<br>
 	- power_bton=9		: trigger power button for 32s (force power off computer)<br>
 	- on			: starts animation<br>
