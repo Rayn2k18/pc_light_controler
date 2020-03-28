@@ -53,8 +53,8 @@ TODO :
 		<li>#define WIFI_SSID "<b>YOUR SSID</b>"     // WiFi network</li>
 		<li>#define WIFI_PASSWORD "<b>YOUR WIFI PASSWORD</b>" // WiFi network password</li>
 	<br>
-		<li>#define LED_COUNT 60        // number of leds of your strip N°1</li>
-		<li>#define LED_COUNT2 80		// number of leds of your strip N°2 </li>
+		<li>#define LED_COUNT <b>60</b>        // number of leds of your strip N°1</li>
+		<li>#define LED_COUNT2 <b>80</b>		// number of leds of your strip N°2 </li>
 	</ul>
 	<br>
 	<li>print your case (to avoid electrical shorts ^^), 1 available here : <a href="https://www.thingiverse.com/thing:4238962">https://www.thingiverse.com/thing:4238962</a></li>
