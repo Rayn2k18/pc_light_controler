@@ -26,24 +26,24 @@ Needed librairies :
 
 Control URLs (GET) : <br>
 <b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...<br>
-commands can be :<br>
-	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)<br>
-	- power_bton=9		: trigger power button for 32s (force power off computer)<br>
-	- on			: starts animation<br>
-	- off			: power off leds<br>
-	- reset			: restarts ESP<br>
-	- trig_mode=0  		: trigger mode disabled<br>
-	- trig_mode=1  		: HDD led triggers animation<br>
-	- trig_mode=2  		: audio level triggers animation (default)<br>
-	- trig=1		: triggers the "random fireworks" animation<br>
-	- trig			: triggers the current animation<br>
-	- m=&#60;0-56/59&#62;		: switch to animation (see http://&#60;IP of ESP&#62;/ for numbers)<br>
-	- b=&#60;0-255&#62;		: sets brightness<br>
-	- s=&#60;number&#62;		: sets animation speed<br>
-	- c=&#60;000000-ffffff&#62;	: sets color<br>
-	- a=+			: autocycle = on<br>
-	- a=-			: autocycle = off<br>
-<br>
+commands can be :
+	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)
+	- power_bton=9		: trigger power button for 32s (force power off computer)
+	- on			: starts animation
+	- off			: power off leds
+	- reset			: restarts ESP
+	- trig_mode=0  		: trigger mode disabled
+	- trig_mode=1  		: HDD led triggers animation
+	- trig_mode=2  		: audio level triggers animation (default)
+	- trig=1		: triggers the "random fireworks" animation
+	- trig			: triggers the current animation
+	- m=&#60;0-56/59&#62;		: switch to animation (see http://&#60;IP of ESP&#62;/ for numbers)
+	- b=&#60;0-255&#62;		: sets brightness
+	- s=&#60;number&#62;		: sets animation speed
+	- c=&#60;000000-ffffff&#62;	: sets color
+	- a=+			: autocycle = on
+	- a=-			: autocycle = off
+
 TODO : 
 - edit the 2 lines (50 + 51) with your values :
 
