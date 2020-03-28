@@ -21,8 +21,28 @@ Needed components :
 Needed librairies : 
 - ESP8266WiFi
 - ESP8266WebServer
-- WS2812FX
+- WS2812FX (code based on "esp8266_webinterface" example files from that library)
 - EEPROM
+
+Control URLs (GET) : 
+http://<IP of ESP>/set?<command1>&<command2>&<command3>...
+	commands can be :
+	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)
+	- power_bton=9		: trigger power button for 32s (force power off computer)
+	- on			: starts animation
+	- off			: power off leds
+	- reset			: restarts ESP
+	- trig_mode=0  		: trigger mode disabled
+	- trig_mode=1  		: HDD led triggers animation
+	- trig_mode=2  		: audio level triggers animation (default)
+	- trig=1		: triggers the "random fireworks" animation
+	- trig			: triggers the current animation
+	- m=<0-56/59>		: switch to animation (see http://<IP of ESP>/ for numbers)
+	- b=<0-255>		: sets brightness
+	- s=<number>		: sets animation speed
+	- c=<000000-ffffff>	: sets color
+	- a=+			: autocycle = on
+	- a=-			: autocycle = off
 
 TODO : 
 - edit the 2 lines (50 + 51) with your values :
