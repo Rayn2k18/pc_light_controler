@@ -25,26 +25,26 @@ Needed librairies :
 - EEPROM
 
 Control URLs (GET) : <br>
-<b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...
-
+<ul><b>http://&#60;@IP of ESP&#62;/set?</b>&#60;command1&#62;<b>&</b>&#60;command2&#62;<b>&</b>&#60;command3&#62;...</ul>
 commands can be :
-	- power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)
-	- power_bton=9		: trigger power button for 32s (force power off computer)
-	- on			: starts animation
-	- off			: power off leds
-	- reset			: restarts ESP
-	- trig_mode=0  		: trigger mode disabled
-	- trig_mode=1  		: HDD led triggers animation
-	- trig_mode=2  		: audio level triggers animation (default)
-	- trig=1		: triggers the "random fireworks" animation
-	- trig			: triggers the current animation
-	- m=&#60;0-56/59&#62;		: switch to animation (see http://&#60;IP of ESP&#62;/ for numbers)
-	- b=&#60;0-255&#62;		: sets brightness
-	- s=&#60;number&#62;		: sets animation speed
-	- c=&#60;000000-ffffff&#62;	: sets color
-	- a=+			: autocycle = on
-	- a=-			: autocycle = off
-
+<ul>
+	<li> power_bton=1		: trigger power button for 600ms (power on / off / sleep computer)</li>
+	<li> power_bton=9		: trigger power button for 32s (force power off computer)</li>
+	<li> on			: starts animation</li>
+	<li> off			: power off leds</li>
+	<li> reset			: restarts ESP</li>
+	<li> trig_mode=0  		: trigger mode disabled</li>
+	<li> trig_mode=1  		: HDD led triggers animation</li>
+	<li> trig_mode=2  		: audio level triggers animation (default)</li>
+	<li> trig=1		: triggers the "random fireworks" animation</li>
+	<li> trig			: triggers the current animation</li>
+	<li> m=&#60;0-56/59&#62;		: switch to animation (see http://&#60;IP of ESP&#62;/ for numbers)</li>
+	<li> b=&#60;0-255&#62;		: sets brightness</li>
+	<li> s=&#60;number&#62;		: sets animation speed</li>
+	<li> c=&#60;000000-ffffff&#62;	: sets color</li>
+	<li> a=+			: autocycle = on</li>
+	<li> a=-			: autocycle = off</li>
+</ul>
 TODO : 
 - edit the 2 lines (50 + 51) with your values :
 
