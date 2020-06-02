@@ -1,54 +1,30 @@
 /*
-  WS2812FX Webinterface.
-  
-  Harm Aldick - 2016
-  www.aldick.org
+    TODO : 
+    - update ssid / password
+    - update mqtt settings (or disable it below)
+    
+    - tidy code
+    - add a function to control ws2812 settings / animations by mqtt subscribe
 
-  
-  FEATURES
-    * Webinterface with mode, color, speed and brightness selectors
-
-
-  LICENSE
-
-  The MIT License (MIT)
-
-  Copyright (c) 2016  Harm Aldick 
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-
-  
-  CHANGELOG
-  2016-11-26 initial version
-  2018-01-06 added custom effects list option and auto-cycle feature
-  
 */
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <WS2812FX.h>
 #include <EEPROM.h>
+#include <ArduinoMqttClient.h>
 
 extern const char index_html[];
 extern const char main_js[];
 
 #define WIFI_SSID "YOUR SSID"     // WiFi network
-#define WIFI_PASSWORD "YOUR WIFI PASSWORD" // WiFi network password
+#define WIFI_PASSWORD "YOUR PASSWORD" // WiFi network password
+
+// MQTT Settings
+#define MQTT_ON     // to disable mqtt, comment this line
+char* pubchan = "light_control/out";
+const char* subchan = "light_control/in";
+const char* mqtt_server = "192.168.200.254";
+const uint16_t mqtt_port = 1883;
 
 
 //#define STATIC_IP                       // uncomment for static IP, set IP below
@@ -120,6 +96,11 @@ int lastBright, lastMode, lastSpeed = 0;
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 WS2812FX ws2812fx2 = WS2812FX(LED_COUNT2, LED_PIN2, NEO_GRB + NEO_KHZ800);
 ESP8266WebServer server(HTTP_PORT);
+
+#ifdef MQTT_ON 
+WiFiClient wificlient;
+MqttClient mqttClient(wificlient);
+#endif
 
 /*uint16_t flashRB(void) {
     for(uint16_t i=SEGMENT.start; i <= SEGMENT.stop; i++) {
@@ -220,6 +201,33 @@ void setup(){
 
   Serial.println("Wifi setup");
   wifi_setup();
+  
+  // MQTT ----------------------------------------------------
+  #ifdef MQTT_ON 
+    Serial.print("Attempting to connect to the MQTT broker: ");
+    Serial.println(mqtt_server);
+
+    if (!mqttClient.connect(mqtt_server, mqtt_port)) {
+      Serial.print("MQTT connection failed! Error code = ");
+      Serial.println(mqttClient.connectError());
+
+      while (1);
+    }
+
+    Serial.println("You're connected to the MQTT broker!");
+    Serial.println();
+    
+     // set the message receive callback
+    mqttClient.onMessage(mqtt_callback);
+
+    Serial.print("Subscribing to topic: ");
+    Serial.println(subchan);
+    Serial.println();
+
+    // subscribe to a topic
+    mqttClient.subscribe(subchan);
+  #endif
+ //--------------------------------------------------------
  
   Serial.println("HTTP server setup");
   server.on("/", srv_handle_index_html);
@@ -246,11 +254,14 @@ void loop() {
   unsigned long now = millis();
 
   server.handleClient();
+  #ifdef MQTT_ON 
+    mqttClient.poll();
+  #endif
   ws2812fx.service();
   ws2812fx2.service();
 
   if(now - last_wifi_check_time > WIFI_TIMEOUT) {
-    Serial.print("Checking WiFi... ");
+    Serial.print("Checking WiFi... Wifi.Status = ");Serial.println(WiFi.status());
     if(WiFi.status() != WL_CONNECTED) {
       Serial.println("WiFi connection lost. Reconnecting...");
       wifi_setup();
@@ -266,6 +277,9 @@ void loop() {
   if(pc_state != pwr_led_state) {
       Serial.print("PC Status CHANGED : ");Serial.println(pwr_led_state);
       pc_state = pwr_led_state;
+      #ifdef MQTT_ON 
+        mqtt_send((String)pubchan+"/power", String(pwr_led_state));    // MQTT PUB
+      #endif
       
       if(pc_state == 1) {
           ws2812fx.start();
@@ -331,6 +345,10 @@ void loop() {
  * Connect to WiFi. If no connection is made within WIFI_TIMEOUT, ESP gets resettet.
  */
 void wifi_setup() {
+  if(WiFi.isConnected()) {
+      Serial.println("false positive, return to normal ...");
+      return ;
+  }
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(WIFI_SSID);
@@ -518,9 +536,15 @@ void restore_show() {
 void srv_handle_set() {
   String str_valid = server.arg("valid");
   bool valid = false;
+  
   if (str_valid != "") valid = true;
   Serial.print("str_valid = ");Serial.print(str_valid);Serial.print(" / valid : ");Serial.println(valid);
   for (uint8_t i=0; i < server.args(); i++){
+      
+    #ifdef MQTT_ON 
+      mqtt_send((String)pubchan+"/"+server.argName(i), server.arg(i).c_str());    // MQTT PUB
+    #endif
+    
     if(server.argName(i) == "c") {
       uint32_t tmp = (uint32_t) strtol(server.arg(i).c_str(), NULL, 16);
       if(tmp >= 0x000000 && tmp <= 0xFFFFFF) {
@@ -693,3 +717,48 @@ void srv_handle_set() {
   }
   server.send(200, "text/plain", "OK");
 }
+
+#ifdef MQTT_ON 
+ // MQTT Functions ------------------------------
+void mqtt_send(String topic, String message) {
+    Serial.print("Sending message to topic: ");
+    Serial.println(topic);
+    Serial.print(message);
+    Serial.println();
+
+    // send message, the Print interface can be used to set the message contents
+    mqttClient.beginMessage(topic);
+    mqttClient.print(message);
+    mqttClient.endMessage();
+
+    Serial.println();
+
+}
+
+void mqtt_callback(int messageSize) {
+  // we received a message, print out the topic and contents
+  Serial.println("Received a message with topic '");
+  Serial.print(mqttClient.messageTopic());
+  Serial.print("', length ");
+  Serial.print(messageSize);
+  Serial.println(" bytes:");
+  String value_mqtt;
+
+  // use the Stream interface to print the contents
+  while (mqttClient.available()) {
+    value_mqtt = mqttClient.read();
+    Serial.print(value_mqtt);
+  }
+  Serial.println();
+  
+  Serial.print("Wifi Status : ");
+  Serial.print(WiFi.status());
+  Serial.print(" / ");
+  Serial.print(wificlient.status());
+  Serial.print(" -> ");
+  Serial.println(WiFi.isConnected());
+  
+  Serial.println();
+}
+#endif
+// -------------------------------------------------
