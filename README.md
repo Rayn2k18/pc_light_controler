@@ -59,7 +59,7 @@ TODO :
 	<br>
 	Disable MQTT support if you don't want it (comment line 23) OR Update MQTT Settings  (broker, port, topics from line 24 to 27)
 	<br>
-	/!\ by default, when your computer is not ON (power led = off), no animation is shown (except somme trigger by jack or hdd led if configured so), <br>
+	/!\ by default, when your computer is not ON (power led = off), no animation is shown (except some trigger by jack or hdd led if configured so), <br>
 	So if you don't see any led animation, check that power led pin is connected and on the right way (check polarity)<br>
 	<br>
 	to disable this behaviour, comment lines from 276 to 294
