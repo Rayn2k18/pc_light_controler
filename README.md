@@ -59,8 +59,8 @@ TODO :
 	<br>
 	<li>Disable MQTT support if you don't want it (comment line 23) OR Update MQTT Settings  (broker, port, topics from line 24 to 27)</li>
 	<li>/!\ by default, when your computer is not ON (power led = off), no animation is shown (except some trigger by jack or hdd led if configured so), </li>
-	<br>	So if you don't see any led animation, check that power led pin is connected and on the right way (check polarity)<br>
-	<br>	to disable this behaviour, comment lines from 276 to 294</li>
+	So if you don't see any led animation, check that power led pin is connected and on the right way (check polarity)
+	to disable this behaviour, comment lines from 276 to 294</li>
 	<br>
 	<li>print your case (to avoid electrical shorts ^^), 1 available here : <a href="https://www.thingiverse.com/thing:4238962">https://www.thingiverse.com/thing:4238962</a></li>
 </ul>
